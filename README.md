@@ -1,14 +1,47 @@
-# SMTShell
+# #system_shell_2#
 
-This tool allows most Samsung devices to achieve a `system` shell (UID 1000). It was patched in OneUI 5.1, but will work on Android 13 running OneUI 5.0 or older. It should work as far back and Android 9.0 (and maybe earlier).
+SMT Shell by BLuFeNiX with a twist of my own UPDATED & UPGRADED. #system_shell_2# will allow you to achieve a `system` shell (UID 1000). This was brought upon me as a challenge to update and upgrade SMT Shell. With the updates and upgrades implemented, you can NOW bypass Samsung's One UI 5.1 patch that was introduced back in Feb but strictly limited up to devices carrying the May 1,2023 security patch and on most watches, a security patch of April 1, 2023. This is something AOSP did to prevent any bypasses resulting in Samsung-text-to-talk being downgraded past the factory apk on your device. See here for more information  https://android.googlesource.com/platform/frameworks/base/+/33940a9749666eec991904094ccf56ae4ca4ae10
 
-It also acts similar to Magisk or SuperSU, allowing apps to easily execute `system` commands via [SMTShell-API](https://github.com/BLuFeNiX/SMTShell-API/).
+
+#system_shell_2# was kept almost intact except for the obvious changes. The majority of the buttons added, only work if your device carries IOTHiddenMenu. If you have a Korean or Indian variant, you MAY not be able to enjoy the full functionality that this version brings. There is nothing at the moment to change this or get it installed on your device. If you have IOTHiddenMenu already installed, then enjoy. If not, then your out of luck. 
+
+
 
 <div align="center">
-    <img src="screenshots/01.png" width="30%" />
-    <img src="screenshots/02.png" width="30%" /> 
-    <img src="screenshots/03.png" width="30%" /> 
+    <img src="screenshots/ss1.png" width="20%" />
+    <img src="screenshots/ss2.png" width="20%" /> 
+    <img src="screenshots/ss3.png" width="20%" />
+    <img src="screenshots/ss4.png" width="20%" /> 
+    <img src="screenshots/ss5.png" width="20%" /> 
+    <img src="screenshots/ss6.png" width="20%" />  
 </div>
+ 
+
+
+
+## Credits
+    BLuFeNiX (https://github.com/BLuFeNiX/)
+
+    SMTShell (https://github.com/BLuFeNiX/SMTShell/)
+
+    SMTShell-API (https://github.com/BLuFeNiX/SMTShell-API/)
+
+#### Thanks for the challenge and your patience. I still dont know what I'm doing but I'm getting there.
+
+
+
+## *New* Bypass Method
+The method for bypassing the One UI 5.1 was found by one individual. Full credit goes to him and his efforts on making this bypass available. Many thanks to k0mraid3 for his contribution. https://twitter.com/k0mraid3
+
+#### The following is the command that bypasses the FEB patch but stops at MAY 2023.
+```
+adb install -d -i com.sec.android.preloadinstaller /data/local/tmp/com.samsung.SMT_v3.0.02.2.apk
+pm install -d -i com.sec.android.preloadinstaller /data/local/tmp/com.samsung.SMT_v3.0.02.2.apk
+```
+
+
+
+
 
 ## Usage (with Shizuku)
 
