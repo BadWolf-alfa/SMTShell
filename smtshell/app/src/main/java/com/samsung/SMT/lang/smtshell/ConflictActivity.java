@@ -1,15 +1,24 @@
 package com.samsung.SMT.lang.smtshell;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewConfiguration;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.InputDeviceCompat;
+import androidx.core.view.MotionEventCompat;
+import androidx.core.view.ViewConfigurationCompat;
+
+import com.samsung.SMT.lang.smtshell.watch.AdditionalWatchServices;
 
 import java.util.ArrayList;
 
@@ -23,6 +32,8 @@ public class ConflictActivity extends AppCompatActivity {
     private TextView mTextView;
     private ListView mListView;
 
+    private AdditionalWatchServices additionalWatchServices;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +43,32 @@ public class ConflictActivity extends AppCompatActivity {
         if (resolvePackageConflicts()) {
             ActivityUtils.launchNewTask(this, MainActivity.class);
         }
+        initAdditionalWatchServices();
+    }
+
+    private void initAdditionalWatchServices(){
+        additionalWatchServices = new AdditionalWatchServices(getApplicationContext(),getSupportActionBar());
+        additionalWatchServices.customActionBar();
+        additionalWatchServices.bindHardwareRotary(mListView);
+    }
+
+    private void bindHardwareRotary(View view){
+        Context context = getApplicationContext();
+        view.setOnGenericMotionListener((v, ev) -> {
+            if (ev.getAction() == MotionEvent.ACTION_SCROLL &&
+                    ev.isFromSource(InputDeviceCompat.SOURCE_ROTARY_ENCODER)
+            ) {
+                // Don't forget the negation here
+                float delta = -ev.getAxisValue(MotionEventCompat.AXIS_SCROLL) *
+                        ViewConfigurationCompat.getScaledVerticalScrollFactor(
+                                ViewConfiguration.get(context), context
+                        );
+                // Swap these axes to scroll horizontally instead
+                v.scrollBy(0, Math.round(delta));
+                return true;
+            }
+            return false;
+        });
     }
 
     /**

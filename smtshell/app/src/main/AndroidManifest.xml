@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.samsung.SMT.lang.smtshell">
 
+    <uses-feature android:name="android.hardware.type.watch" />
+
     <permission android:name="smtshell.permission.SELF" android:protectionLevel="signature" />
     <uses-permission android:name="smtshell.permission.SELF" />
 
@@ -20,7 +22,7 @@
     <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES" />
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <uses-sdk tools:overrideLibrary="net.blufenix.smtshell.api, rikka.shizuku.api, rikka.shizuku.shared, rikka.shizuku.aidl, rikka.shizuku.provider" />
+    <uses-sdk tools:overrideLibrary="net.blufenix.smtshell.api, rikka.shizuku.api, rikka.shizuku.shared, rikka.shizuku.aidl, rikka.shizuku.provider, androidx.wear, androidx.wear.remote.interactions, androidx.wear.phone.interactions" />
 
     <application
         android:allowBackup="true"
@@ -28,24 +30,32 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:name=".SMTShell"
-        android:theme="@style/Theme.AppCompat">
-        <activity android:name=".MainActivity"
+        android:name="com.samsung.SMT.lang.smtshell.SMTShell"
+        android:theme="@style/Theme.Geminiman.Splash.Starting">
+        <uses-library
+            android:name="com.google.android.wearable"
+            android:required="true" />
+        <meta-data
+            android:name="com.google.android.wearable.standalone"
+            android:value="true" />
+        <activity android:name="com.samsung.SMT.lang.smtshell.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".ConflictActivity"
+        <activity android:name="com.samsung.SMT.lang.smtshell.ConflictActivity"
+            android:theme="@style/Theme.AppCompat"
             android:exported="false" />
 
-        <activity android:name=".AllTheButtons"
-            android:exported="false" />
+        <activity android:name="com.samsung.SMT.lang.smtshell.AllTheButtons"
+            android:theme="@style/Theme.AppCompat"
+            android:exported="false"/>
 
-        <activity android:name=".ShellActivity"
+        <activity android:name="com.samsung.SMT.lang.smtshell.ShellActivity"
+            android:theme="@style/Theme.AppCompat"
             android:exported="false" />
 
         <service

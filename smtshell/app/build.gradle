@@ -6,8 +6,8 @@ android {
         applicationId "com.samsung.SMT.lang.smtshell"
         minSdkVersion 22 // must be 22 or lower for the exploit to work
         targetSdkVersion 33
-        versionCode 20230528
-        versionName "3.0"
+        versionCode 20230325
+        versionName "2.0"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         externalNativeBuild {
             ndkBuild {
@@ -17,10 +17,13 @@ android {
     }
     buildTypes {
         release {
+            //set as false when debugging, true when releasing
             minifyEnabled false
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
     externalNativeBuild {
         ndkBuild {
             path file('src/main/jni/Android.mk')
@@ -39,4 +42,12 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    //Adding dependencies for nicer UI on Watch
+    //Splashscreen <- optional
+    implementation 'androidx.core:core-splashscreen:1.0.0'
+    //wear support <- ensures layout is watch friendly
+    implementation 'androidx.wear:wear:1.2.0'
+    //open URL on phone
+    implementation 'androidx.wear:wear-remote-interactions:1.0.0'
+    implementation 'androidx.wear:wear-phone-interactions:1.0.1'
 }

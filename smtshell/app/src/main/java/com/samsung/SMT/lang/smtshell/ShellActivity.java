@@ -1,14 +1,18 @@
 package com.samsung.SMT.lang.smtshell;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
+import com.samsung.SMT.lang.smtshell.watch.AdditionalWatchServices;
 
 import net.blufenix.smtshell.api.SMTShellAPI;
 
@@ -45,6 +49,9 @@ public class ShellActivity extends Activity {
                 String command = mInputField.getText().toString()+"\n";
                 sendCommand(command);
                 mInputField.setText("");
+                // hide virtual keyboard
+                InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(mInputField.getWindowToken(), 0);
                 return true;
             }
             return false;
@@ -53,6 +60,12 @@ public class ShellActivity extends Activity {
         SMTShellAPI.loadLibrary(this, getApplicationInfo().nativeLibraryDir + "/" + "libsmtshell.so");
 
         AsyncTask.execute(new ConnectTask());
+        initAdditionalWatchServices();
+    }
+
+    private void initAdditionalWatchServices(){
+        AdditionalWatchServices additionalWatchServices = new AdditionalWatchServices(getApplicationContext(), null);
+        additionalWatchServices.bindHardwareRotary(mScrollView);
     }
 
     private void sendCommand(String command) {
@@ -62,6 +75,8 @@ public class ShellActivity extends Activity {
 
     private void appendOutput(String output) {
         mTermOutput.append(output);
+        mScrollView.setSmoothScrollingEnabled(true);
+        mScrollView.postDelayed(() -> mScrollView.fullScroll(ScrollView.FOCUS_DOWN), 500);
     }
 
     private class ConnectTask implements Runnable {
@@ -112,6 +127,11 @@ public class ShellActivity extends Activity {
                 Log.e(TAG, "error reading shell stream!", e);
             }
         }).start();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
     @Override
